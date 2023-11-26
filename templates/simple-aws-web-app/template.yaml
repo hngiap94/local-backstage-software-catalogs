@@ -1,0 +1,130 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: simple-aws-web-app
+  title: Create Simple AWS Web Application
+  description: Create a new AWS web application
+  tags:
+    - aws
+    - app
+spec:
+  owner: hngiap94@gmail.com
+  type: service
+  parameters:
+    - title: Provide some simple information
+      required:
+        - application_name
+        - owner
+      properties:
+        application_name:
+          title: Name
+          type: string
+          description: Unique name of the application
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this application is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the application
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Repository configuration
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+    - title: Application configuration
+      required:
+        - techdocsBucketName
+        - accessToken
+        - awsRegion
+        - awsAccessKey
+        - awsSecretKey
+      properties:
+        techdocsBucketName:
+          title: Techdocs Bucket Name
+          type: string
+          description: Bucket name to store application's techdocs
+        accessToken:
+          title: Access Token
+          type: string
+          ui:widget: password
+          description: Access token that AWS Amplify used to access application's repository
+        awsRegion:
+          title: AWS Region
+          type: string
+          description: AWS region
+          default: us-east-1
+        awsAccessKey:
+          title: AWS Access Key ID
+          type: string
+          ui:widget: password
+          description: Access key to connect AWS
+        awsSecretKey:
+          title: AWS Secret Access Key
+          type: string
+          ui:widget: password
+          description: Secret key to connect AWS
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          application_name: ${{ parameters.application_name }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          repoUrl: ${{ parameters.repoUrl }}
+          owner: ${{ parameters.owner }}
+          testEnv: ${{ process.env.TEST_ENV }}
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts:
+          - github.com
+        description: This is ${{ parameters.application_name }}
+        defaultBranch: main
+        repoUrl: ${{ parameters.repoUrl }}
+        repoVisibility: public
+        bypassPullRequestAllowances:
+          users:
+            - ${{ (parameters.repoUrl | parseRepoUrl).owner }}
+        repoVariables:
+          BUCKET_NAME: ${{parameters.techdocsBucketName}}
+          AWS_REGION: ${{parameters.awsRegion}}
+          ENTITY_NAME: ${{parameters.application_name}}
+        secrets:
+          ACCESS_TOKEN: ${{ parameters.accessToken }}
+          AWS_ACCESS_KEY_ID: ${{ parameters.awsAccessKey }}
+          AWS_SECRET_ACCESS_KEY: ${{ parameters.awsSecretKey }}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

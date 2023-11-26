@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: demo-apis
+  description: A collection of all demo APIs
+spec:
+  targets:
+    - ./demo-apis/demo-provided-apis.yaml
+    - ./demo-apis/demo-consumed-apis.yaml

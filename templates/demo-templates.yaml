@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: demo-templates
+  description: A collection of all demo templates
+spec:
+  targets:
+    - ./simple-python-app/template.yaml
+    - ./simple-aws-web-app/template.yaml

@@ -1,0 +1,35 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: demo-provided-apis
+  description: Demo Provided APIs
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: admin
+  definition: |
+    openapi: "3.0.3"
+    info:
+      version: 1.0.0
+      title: Demo Provided APIs
+      license:
+        name: MIT
+    servers:
+      - url: https://httpbin.org
+    paths:
+      /get:
+        get:
+          summary: Get Data from httpbin.org
+          description: Retrieves data from the httpbin.org service.
+          responses:
+            '200':
+              description: Successful response
+              content:
+                application/json:
+                  example:
+                    args: {}
+                    headers:
+                      Accept: application/json
+                      Host: httpbin.org
+                      User-Agent: HTTPie/0.9.9
+                    url: https://httpbin.org/get

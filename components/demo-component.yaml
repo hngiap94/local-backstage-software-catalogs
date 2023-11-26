@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: demo-component
+  description: Demo component
+spec:
+  type: service
+  lifecycle: experimental
+  owner: developer
+  system: demo-portal
+  dependsOn: ['resource:demo-db']

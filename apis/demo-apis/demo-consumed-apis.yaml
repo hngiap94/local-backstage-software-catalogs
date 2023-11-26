@@ -1,0 +1,53 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: demo-consumed-apis
+  description: Demo Consumed APIs
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: admin
+  definition: |
+    openapi: "3.0.3"
+    info:
+      version: 1.0.0
+      title: Demo Consumed APIs
+      license:
+        name: MIT
+    servers:
+      - url: https://httpbin.org
+    paths:
+      /post:
+        post:
+          summary: Send Data to httpbin.org
+          description: Sends data to the httpbin.org service.
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  key1: value1
+                  key2: value2
+          responses:
+            '200':
+              description: Successful response
+              content:
+                application/json:
+                  example:
+                    args: {}
+                    data: '{"key1": "value1", "key2": "value2"}'
+                    files: {}
+                    form: {}
+                    headers:
+                      Accept: application/json
+                      Content-Length: '35'
+                      Content-Type: application/json
+                      Host: httpbin.org
+                      User-Agent: HTTPie/0.9.9
+                    json:
+                      key1: value1
+                      key2: value2
+                    origin: xxx.xxx.xxx.xxx
+                    url: https://httpbin.org/post

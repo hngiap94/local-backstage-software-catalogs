@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: demo-portal
+  description: Demo portal
+  tags:
+    - portal
+spec:
+  owner: admin
+  domain: demo-domain

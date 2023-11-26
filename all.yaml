@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: all-catalogs
+  description: A collection of all catalogs
+spec:
+  targets:
+    # templates
+    - ./templates/demo-templates.yaml

@@ -1,0 +1,35 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: hngiap
+spec:
+  memberOf: [admin]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: devops-01
+spec:
+  memberOf: [devops]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: devops-02
+spec:
+  memberOf: [devops]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: developer-01
+spec:
+  memberOf: [developer]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: developer-02
+spec:
+  memberOf: [developer]

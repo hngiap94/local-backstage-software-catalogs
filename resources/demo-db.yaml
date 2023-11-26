@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: demo-db
+  description: Demo database
+spec:
+  type: database
+  owner: admin
+  system: demo-portal
