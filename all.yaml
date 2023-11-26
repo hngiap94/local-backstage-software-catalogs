@@ -13,3 +13,4 @@ spec:
     - ./resources/demo-db.yaml
     - ./systems/demo-portal.yaml
     - ./users/demo-users.yaml
+    - ./apis/demo-apis.yaml
