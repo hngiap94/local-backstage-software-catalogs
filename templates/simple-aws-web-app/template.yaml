@@ -87,7 +87,7 @@ spec:
         values:
           application_name: ${{ parameters.application_name }}
           description: ${{ parameters.description }}
-          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          projectSlug: ${{ parameters.repoUrl | projectSlug }}
           repoUrl: ${{ parameters.repoUrl }}
           owner: ${{ parameters.owner }}
           testEnv: ${{ process.env.TEST_ENV }}
@@ -104,7 +104,7 @@ spec:
         repoVisibility: public
         bypassPullRequestAllowances:
           users:
-            - ${{ (parameters.repoUrl | parseRepoUrl).owner }}
+            - ${{ parameters.repoUrl | parseRepoUrl | pick('owner') }}
         repoVariables:
           BUCKET_NAME: ${{parameters.techdocsBucketName}}
           AWS_REGION: ${{parameters.awsRegion}}
