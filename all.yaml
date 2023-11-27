@@ -7,7 +7,9 @@ spec:
   targets:
     # templates
     - ./templates/demo-templates.yaml
-    - ./components/demo-component.yaml
+    - ./components/admin-component.yaml
+    - ./components/developer-component.yaml
+    - ./components/devops-component.yaml
     - ./domains/demo-domain.yaml
     - ./groups/demo-groups.yaml
     - ./resources/demo-db.yaml
