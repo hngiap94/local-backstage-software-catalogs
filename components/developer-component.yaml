@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: demo-component
-  description: Demo component
+  name: developer-component
+  description: Developer component
 spec:
   type: service
   lifecycle: experimental
